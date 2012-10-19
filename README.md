@@ -20,12 +20,10 @@ To use the TZNotif in your app, just drag the TZNotif class files (demo files an
 How to use
 -----------
 
-Import:
-#import "TZNotif.h"
+Import: #import "TZNotif.h"
 
-Initialization:
-[TZNotif setupNotificationsWithStyle:TZNotifStyleDefault delay:2 heightPercentage:0.05f behaviour:TZNotifBehaviorDefault fontName:@"Helvetica Neue"];
+Initialization: [TZNotif setupNotificationsWithStyle:TZNotifStyleDefault delay:2 heightPercentage:0.05f behaviour:TZNotifBehaviorDefault fontName:@"Helvetica Neue"];
 
-Usage:
-[TZNotif showString:@"Here I am, nice notification for you"];
+Usage: [TZNotif showString:@"Here I am, nice notification for you"];
 
+Screenshoot: https://github.com/bloto/TZNotif/blob/master/screenshoot.png
