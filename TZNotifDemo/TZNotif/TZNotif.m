@@ -1,3 +1,9 @@
+//
+//  TZNotif
+//
+//  Created by Tomasz Zablocki on 19/10/2012.
+//  Copyright (c) 2012 Tomasz Zablocki. All rights reserved.
+//
 #import "TZNotif.h"
 #import "QuartzCore/QuartzCore.h"
 

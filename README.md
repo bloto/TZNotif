@@ -19,6 +19,7 @@ To use the TZNotif in your app, just drag the TZNotif class files (demo files an
 
 How to use
 -----------
+
 Import:
 #import "TZNotif.h"
 
