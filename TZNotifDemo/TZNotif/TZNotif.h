@@ -1,3 +1,10 @@
+//
+//  AppDelegate.m
+//  TZNotifDemo
+//
+//  Created by Tomasz Zablocki on 19/10/2012.
+//  Copyright (c) 2012 Tomasz Zablocki. All rights reserved.
+//
 typedef enum {
 	TZNotifBehaviorDefault,
 	TZNotifBehaviorTopFromTopToTop,
