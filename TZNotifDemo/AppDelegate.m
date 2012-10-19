@@ -7,11 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "TZNotif.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [TZNotif setupNotificationsWithStyle:TZNotifStyleDefault delay:2 heightPercentage:0.05f behaviour:TZNotifBehaviorDefault fontName:@"Helvetica Neue"];
     // Override point for customization after application launch.
     return YES;
 }

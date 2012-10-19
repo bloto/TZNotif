@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "TZNotif.h"
 @interface ViewController ()
 
 @end
@@ -17,6 +17,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [TZNotif showString:@"Here I am, nice notification for you"];
+    [TZNotif showString:@"But I am not alone"];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
