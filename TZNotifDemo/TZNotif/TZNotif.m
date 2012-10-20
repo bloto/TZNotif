@@ -66,51 +66,51 @@ static NSInteger _nextNotifPosition = 0;
 
 - (id)initWithString:(NSString *)string
 {
-	if (self = [super init])
-	{
-		CGSize stringSize = [string sizeWithFont:_font];
-		// initial position
-		self.frame = CGRectMake(0, 0, stringSize.width + 2 * (_heightInPoints - stringSize.height), _heightInPoints);
+    if (self = [super init])
+    {
+        CGSize stringSize = [string sizeWithFont:_font];
+        // initial position
+        self.frame = CGRectMake(0, 0, stringSize.width + 2 * (_heightInPoints - stringSize.height), _heightInPoints);
         
-		// set label to be the same size, text will be smaller anyway
-		UILabel *label = [[UILabel alloc] initWithFrame:self.frame];
-		switch(_style)
-		{
-			case TZNotifStyleDefault:
-			case TZNotifStyleGrayAndWhite:
-				[self setBackgroundColor:[UIColor grayColor]];
-				[self setAlpha:0.5f];
-				[self.layer setCornerRadius:5.0f];
-				[label setTextColor:[UIColor whiteColor]];
+        // set label to be the same size, text will be smaller anyway
+        UILabel *label = [[UILabel alloc] initWithFrame:self.frame];
+        switch(_style)
+        {
+            case TZNotifStyleDefault:
+            case TZNotifStyleGrayAndWhite:
+                [self setBackgroundColor:[UIColor grayColor]];
+                [self setAlpha:0.5f];
+                [self.layer setCornerRadius:5.0f];
+                [label setTextColor:[UIColor whiteColor]];
                 break;
-			default:
-				break;
-		};
-		[label setBackgroundColor:[UIColor clearColor]];
-		[label setFont:_font];
-		[label setTextAlignment:NSTextAlignmentCenter];
-		[label setText:string];
-		[self addSubview:label];
-	}
-	return self;
+            default:
+                break;
+        };
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setFont:_font];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setText:string];
+        [self addSubview:label];
+    }
+    return self;
 }
 
 - (void)animate
 {
-	switch(_behavior)
-	{
-		case TZNotifBehaviorDefault:
-		case TZNotifBehaviorTopFromTopToTop:
-		{
-			// initial position over window
+    switch(_behavior)
+    {
+        case TZNotifBehaviorDefault:
+        case TZNotifBehaviorTopFromTopToTop:
+        {
+            // initial position over window
             CGSize windowSize = [[[[TZNotif visibleWindow] subviews] objectAtIndex:0] bounds].size;// takes orientation into account
-			[self setCenter:CGPointMake(windowSize.width/2, -_heightInPoints / 2)];
-
+            [self setCenter:CGPointMake(windowSize.width/2, -_heightInPoints / 2)];
+            
             // make it transformable to new orientation
             [self setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
             
-			// animations
-			[UIView animateWithDuration:_delay / 3
+            // animations
+            [UIView animateWithDuration:_delay / 3
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
@@ -120,31 +120,31 @@ static NSInteger _nextNotifPosition = 0;
                              }
                              completion:^(BOOL finished){
                                  //if (finished) { // in case of orientation change we do it anyway
-                                     [UIView animateWithDuration:_delay / 3
-														   delay:_delay
-														 options:UIViewAnimationOptionCurveEaseIn
-                                                      animations:^{
-                                                          [self setCenter:CGPointMake(self.center.x, - _heightInPoints/2)]; //fully hidden
+                                 [UIView animateWithDuration:_delay / 3
+                                                       delay:_delay
+                                                     options:UIViewAnimationOptionCurveEaseIn
+                                                  animations:^{
+                                                      [self setCenter:CGPointMake(self.center.x, - _heightInPoints/2)]; //fully hidden
+                                                  }
+                                                  completion:^(BOOL finished){
+                                                      //if (finished) { // in case of orientation change we do it anyway
+                                                      _activeNotifs--;
+                                                      if (_activeNotifs == 0)
+                                                      {
+                                                          _nextNotifPosition = 0;
                                                       }
-                                                      completion:^(BOOL finished){
-                                                          //if (finished) { // in case of orientation change we do it anyway
-                                                              _activeNotifs--;
-                                                              if (_activeNotifs == 0)
-                                                              {
-                                                                  _nextNotifPosition = 0;
-                                                              }
-                                                              [self removeFromSuperview];
-                                                      }
-                                      ];
+                                                      [self removeFromSuperview];
+                                                  }
+                                  ];
                              }
              ];
-		}
+        }
             break;
-		default:
-		{
-		}
+        default:
+        {
+        }
             break;
-	};
+    };
 }
 
 @end
