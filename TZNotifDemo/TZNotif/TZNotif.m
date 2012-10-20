@@ -118,7 +118,7 @@ static NSInteger _nextNotifPosition = 0;
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                 [self setCenter:CGPointMake(self.center.x, self.center.y + _heightInPoints * 1.2 + _heightInPoints * (CGFloat)_nextNotifPosition + [[UIApplication sharedApplication] statusBarFrame].size.height)];
+                                 [self setCenter:CGPointMake(self.center.x, self.center.y + _heightInPoints * 1.2 + _heightInPoints * (CGFloat)_nextNotifPosition)];
                                  _activeNotifs++;
                                  _nextNotifPosition++;
                              }
