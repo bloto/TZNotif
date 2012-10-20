@@ -40,7 +40,7 @@ static NSInteger _nextNotifPosition = 0;
         _delay = delay;
         _behavior = behavior;
         
-        CGSize windowSize = [TZNotif visibleWindow].screen.bounds.size;
+        CGSize windowSize = [[TZNotif visibleWindow] frame].size;// always the same regardless of orientation
         _heightInPoints = heightPercentage * windowSize.height;
         _font = [UIFont fontWithName:fontName size:_heightInPoints / NOTIF_TO_STRING_RATIO];
     });
@@ -63,7 +63,8 @@ static NSInteger _nextNotifPosition = 0;
     dispatch_async(dispatch_get_main_queue(), ^{
         TZNotif *notification = [[TZNotif alloc] initWithString:string];
         [notification animate];
-        [[TZNotif visibleWindow] addSubview:notification];
+        // Add to subview because we want orientation, transform and translation events
+        [[[[TZNotif visibleWindow] subviews] objectAtIndex:0] addSubview:notification];
     });
 }
 
@@ -106,8 +107,11 @@ static NSInteger _nextNotifPosition = 0;
 		case TZNotifBehaviorTopFromTopToTop:
 		{
 			// initial position over window
-            CGSize windowSize = [TZNotif visibleWindow].screen.bounds.size;
+            CGSize windowSize = [[[[TZNotif visibleWindow] subviews] objectAtIndex:0] bounds].size;// takes orientation into account
 			[self setCenter:CGPointMake(windowSize.width/2, -_heightInPoints / 2)];
+
+            // make it transformable to new orientation
+            [self setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
             
 			// animations
 			[UIView animateWithDuration:_delay / 3
@@ -119,7 +123,7 @@ static NSInteger _nextNotifPosition = 0;
                                  _nextNotifPosition++;
                              }
                              completion:^(BOOL finished){
-                                 if (finished) { // should be always true since we do not fire more animations on it
+                                 //if (finished) { // in case of orientation change we do it anyway
                                      [UIView animateWithDuration:_delay / 3
 														   delay:_delay
 														 options:UIViewAnimationOptionCurveEaseIn
@@ -127,17 +131,15 @@ static NSInteger _nextNotifPosition = 0;
                                                           [self setCenter:CGPointMake(self.center.x, - _heightInPoints/2)]; //fully hidden
                                                       }
                                                       completion:^(BOOL finished){
-                                                          if (finished) { // should be always true since we do not fire more animations on it
+                                                          //if (finished) { // in case of orientation change we do it anyway
                                                               _activeNotifs--;
                                                               if (_activeNotifs == 0)
                                                               {
                                                                   _nextNotifPosition = 0;
                                                               }
                                                               [self removeFromSuperview];
-                                                          }
                                                       }
                                       ];
-                                 }
                              }
              ];
 		}
