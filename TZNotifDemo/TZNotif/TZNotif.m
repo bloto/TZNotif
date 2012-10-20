@@ -49,11 +49,7 @@ static NSInteger _nextNotifPosition = 0;
 + (UIWindow *)visibleWindow
 {
     // I assume there is only one window, this is not always true
-	UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    if (!window) {
-        window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-    }
-	return window;
+    return [[UIApplication sharedApplication].windows objectAtIndex:0];
 }
 
 // Shows notification for specified amount of time
